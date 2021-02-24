@@ -10,7 +10,7 @@
     <bean
         class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
         <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-        <property name="url" value="jdbc:sqlserver://10.10.251.19;databaseName=SCA_QA"/>
+        <property name="url" value="jdbc:sqlserver://10.10.251.19;databaseName=SCA"/>
         <property name="username" value="testsiga"/>
         <property name="password" value="Amsa.2020#"/>
     </bean>
@@ -20,7 +20,7 @@
         <restConfiguration bindingMode="off" component="servlet" contextPath="/rest"/>        
         <rest apiDocs="true" consumes="application/json" id="rest-1"
            produces="application/json" path="/service">
-            <get uri="/customers">
+            <get uri="/ingress">
                 <to uri="direct:routeBussines"/>
             </get>
         </rest>        
@@ -29,27 +29,31 @@
             <from id="_fromIR1" uri="direct:routeBussines"/>
             <log message="DATA IN => \n${body}"/>
             <setProperty propertyName="rut">
-            	<constant>10.000.000-1</constant>
+            	<constant>16783335-7</constant>
             </setProperty>
             <setProperty propertyName="fechaInicio">
-            	<constant>01/01/2021</constant>
+            	<constant>20190114 00:00</constant>
             </setProperty>
             <setProperty propertyName="fechaTermino">
-            	<constant>01/05/2021</constant>
+            	<constant>20200114 00:00</constant>
             </setProperty>
             <setProperty propertyName="Codigo_Certificado">
-            	<constant>100000001</constant>
+            	<constant>-1</constant>
             </setProperty>
             
-            <to id="_sqlSPConsultaRol" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(15) ${exchangeProperty.rut}, DATETIME ${exchangeProperty.fechaInicio}, DATETIME ${exchangeProperty.fechaTermino}, int ${exchangeProperty.Codigo_Certificado}  )?dataSource=#dataSource"/>
+            <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${exchangeProperty.rut}, DATE ${exchangeProperty.fechaInicio}, DATE ${exchangeProperty.fechaTermino}, INTEGER ${exchangeProperty.Codigo_Certificado}  )?dataSource=#dataSource"/>
             <log message="After SP"/>
             <log message="Message After SP => \n${body}"/>
+            <setBody id="_setBody51">
+                <simple>${body[#result-set-1]}</simple>
+            </setBody>
         </route>
 
         <route id="simple-route">
-            <from id="route-timer" uri="timer://foo?period=15000"/>
-            <setBody id="route-setBody"><simple>Hello World from camel-context.xml</simple></setBody>
+            <from id="route-timer" uri="timer://foo?period=20000"/>
+            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version 16</simple></setBody>
             <log id="route-log" message=">>> ${body}"/>
+
         </route>
 
     </camelContext>
