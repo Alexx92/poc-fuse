@@ -14,7 +14,15 @@
         <property name="username" value="testsiga"/>
         <property name="password" value="Amsa.2020#"/>
     </bean>
+    
+    <bean class="cl.amsa.contrato.obj.Input" id="requestInput"/>
+    
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <dataFormats>
+            <json id="jsonToObjectInput" library="Jackson"
+                prettyPrint="true" unmarshalTypeName="cl.amsa.contrato.obj.Input"/>
+        </dataFormats>
+      
       <!-- Configuración base REST DSL -->
    
         <restConfiguration bindingMode="off" component="servlet" contextPath="/rest"/>        
@@ -23,29 +31,34 @@
             <get uri="/ingress">
                 <to uri="direct:routeBussines"/>
             </get>
-        </rest>        
+        </rest>
         
         <route streamCache="true">
             <from id="_fromIR1" uri="direct:routeBussines"/>
             <log message="DATA IN => \n${body}"/>
-            <setProperty propertyName="rut">
-            	<constant>16783335-7</constant>
-            </setProperty>
-            <setProperty propertyName="fechaInicio">
-            	<constant>20190114 00:00</constant>
-            </setProperty>
-            <setProperty propertyName="fechaTermino">
-            	<constant>20200114 00:00</constant>
-            </setProperty>
-            <setProperty propertyName="Codigo_Certificado">
-            	<constant>-1</constant>
-            </setProperty>
+<!--             <setProperty propertyName="rut"> -->
+<!--                 <jsonpath>$.Rut_Trabajador</jsonpath> -->
+<!--             </setProperty> -->
+<!--             <setProperty propertyName="fechaInicio"> -->
+<!--                 <jsonpath>$.FechaInicio</jsonpath> -->
+<!--             </setProperty> -->
+<!--             <setProperty propertyName="fechaTermino"> -->
+<!--                 <jsonpath>$.FechaTermino</jsonpath> -->
+<!--             </setProperty> -->
+<!--             <setProperty propertyName="Codigo_Certificado"> -->
+<!--                 <jsonpath>$.Codigo_Certificado</jsonpath> -->
+<!--             </setProperty> -->
             
-            <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${exchangeProperty.rut}, DATE ${exchangeProperty.fechaInicio}, DATE ${exchangeProperty.fechaTermino}, INTEGER ${exchangeProperty.Codigo_Certificado}  )?dataSource=#dataSource"/>
+            <unmarshal id="_jsonObject" ref="jsonToObjectInput"/>            
+            <to id="_beanValidator" uri="bean-validator://requestInput"/>
+            
+            <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/>
+<!--             <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${exchangeProperty.rut}, DATE ${exchangeProperty.fechaInicio}, DATE ${exchangeProperty.fechaTermino}, INTEGER ${exchangeProperty.Codigo_Certificado}  )?dataSource=#dataSource"/> -->
+<!--                 {#update-count-1=1, #update-count-2=1, #result-set-1=[{Resultado=OK}]} -->
             <log message="After SP"/>
             <log message="Message After SP => \n${body}"/>
             <setBody id="_setBody51">
-                <simple>${body[#result-set-1]}</simple>
+                <simple>{"resultado": "${body[#result-set-1]}"}</simple>
             </setBody>
         </route>
 
