@@ -23,8 +23,7 @@
                 prettyPrint="true" unmarshalTypeName="cl.amsa.contrato.obj.Input"/>
         </dataFormats>
       
-      <!-- Configuración base REST DSL -->
-   
+        <!-- Configuración base REST DSL -->
         <restConfiguration bindingMode="off" component="servlet" contextPath="/rest"/>        
         <rest apiDocs="true" consumes="application/json" id="rest-1"
            produces="application/json" path="/service">
@@ -32,29 +31,15 @@
                 <to uri="direct:routeBussines"/>
             </post>
         </rest>
-        
+        <!-- TODO -->
+        <!-- Agregar respuesta utilizando respuesta de SP -->
+        <!-- Agregar respuesta de validacion de input -->
         <route streamCache="true">
             <from id="_fromIR1" uri="direct:routeBussines"/>
             <log message="DATA IN => \n${body}"/>
-<!--             <setProperty propertyName="rut"> -->
-<!--                 <jsonpath>$.Rut_Trabajador</jsonpath> -->
-<!--             </setProperty> -->
-<!--             <setProperty propertyName="fechaInicio"> -->
-<!--                 <jsonpath>$.FechaInicio</jsonpath> -->
-<!--             </setProperty> -->
-<!--             <setProperty propertyName="fechaTermino"> -->
-<!--                 <jsonpath>$.FechaTermino</jsonpath> -->
-<!--             </setProperty> -->
-<!--             <setProperty propertyName="Codigo_Certificado"> -->
-<!--                 <jsonpath>$.Codigo_Certificado</jsonpath> -->
-<!--             </setProperty> -->
-            
             <unmarshal id="_jsonObject" ref="jsonToObjectInput"/>            
             <to id="_beanValidator" uri="bean-validator://requestInput"/>
-            
             <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/>
-<!--             <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${exchangeProperty.rut}, DATE ${exchangeProperty.fechaInicio}, DATE ${exchangeProperty.fechaTermino}, INTEGER ${exchangeProperty.Codigo_Certificado}  )?dataSource=#dataSource"/> -->
-<!--                 {#update-count-1=1, #update-count-2=1, #result-set-1=[{Resultado=OK}]} -->
             <log message="After SP"/>
             <log message="Message After SP => \n${body}"/>
             <setBody id="_setBody51">
@@ -64,9 +49,8 @@
 
         <route id="simple-route">
             <from id="route-timer" uri="timer://foo?period=20000"/>
-            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version 1.0.1</simple></setBody>
+            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version 1.0.4</simple></setBody>
             <log id="route-log" message=">>> ${body}"/>
-
         </route>
 
     </camelContext>
