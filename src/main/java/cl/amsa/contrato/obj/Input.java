@@ -9,15 +9,15 @@ public class Input {
 	private String rut_trabajador;
 	
 	@NotNull(message = "Valor Requerido")
-	@Size(min=2, max=12, message = "Largo Incorrecto")
+	@Size(min=2, max=20, message = "Largo Incorrecto")
 	private String fecha_inicio;
 	
 	@NotNull(message = "Valor Requerido ")
-	@Size(min=2, max=90, message = "Largo Incorrecto")
+	@Size(min=2, max=20, message = "Largo Incorrecto")
 	private String fecha_termino;
 	
 	@NotNull(message = "Valor Requerido ")
-	@Size(min=1, max=1, message = "Largo Incorrecto")
+	@Size(min=1, max=3, message = "Largo Incorrecto")
 	private String codigo_certificado;
 
 	public String getRut_trabajador() {

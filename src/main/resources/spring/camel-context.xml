@@ -28,9 +28,9 @@
         <restConfiguration bindingMode="off" component="servlet" contextPath="/rest"/>        
         <rest apiDocs="true" consumes="application/json" id="rest-1"
            produces="application/json" path="/service">
-            <get uri="/ingress">
+            <post uri="/ingress">
                 <to uri="direct:routeBussines"/>
-            </get>
+            </post>
         </rest>
         
         <route streamCache="true">
@@ -64,7 +64,7 @@
 
         <route id="simple-route">
             <from id="route-timer" uri="timer://foo?period=20000"/>
-            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version 16</simple></setBody>
+            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version 1.0.1</simple></setBody>
             <log id="route-log" message=">>> ${body}"/>
 
         </route>
