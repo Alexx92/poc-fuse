@@ -17,7 +17,6 @@ public class Input {
 	private String fecha_termino;
 	
 	@NotNull(message = "Valor Requerido ")
-	@Size(min=1, max=3, message = "Largo Incorrecto")
 	private String codigo_certificado;
 
 	public String getRut_trabajador() {

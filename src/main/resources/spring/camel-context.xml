@@ -23,6 +23,17 @@
                 prettyPrint="true" unmarshalTypeName="cl.amsa.contrato.obj.Input"/>
         </dataFormats>
       
+        <onException>
+            <exception>java.lang.Exception</exception>
+            <handled>
+                <simple>true</simple>
+            </handled>
+            <log message="*** Exception Validation *** : ${exception}, ${body}, ${date:now}"/>
+            <setProperty propertyName="RESPONSE">
+                <simple>Parametros de entrada incorrectos</simple>
+            </setProperty>
+            <to uri="direct:generateResponse"/>
+        </onException>
         <!-- Configuración base REST DSL -->
         <restConfiguration bindingMode="off" component="servlet" contextPath="/rest"/>        
         <rest apiDocs="true" consumes="application/json" id="rest-1"
@@ -31,27 +42,37 @@
                 <to uri="direct:routeBussines"/>
             </post>
         </rest>
-        <!-- TODO -->
-        <!-- Agregar respuesta utilizando respuesta de SP -->
-        <!-- Agregar respuesta de validacion de input -->
+        
         <route streamCache="true">
             <from id="_fromIR1" uri="direct:routeBussines"/>
             <log message="DATA IN => \n${body}"/>
             <unmarshal id="_jsonObject" ref="jsonToObjectInput"/>            
             <to id="_beanValidator" uri="bean-validator://requestInput"/>
             <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/>
-            <log message="After SP"/>
-            <log message="Message After SP => \n${body}"/>
+            <log message="RESPONSE SP => \n${body}"/>
             <setBody id="_setBody51">
-                <simple>{"resultado": "${body[#result-set-1]}"}</simple>
+                <simple>${body[#result-set-1][0]}</simple>
             </setBody>
+            <setProperty propertyName="RESPONSE">
+                <simple>${body[Resultado]}</simple>
+            </setProperty>
+            <to uri="direct:generateResponse"/>
         </route>
 
-        <route id="simple-route">
+        <route>
+            <from uri="direct:generateResponse"/>
+            <setBody>
+                <simple>{"Resultado": "${exchangeProperty[RESPONSE]}" }</simple>
+            </setBody>
+            <setHeader headerName="Content-Type">
+                <constant>application/json; charset:utf-8</constant>
+            </setHeader>
+        </route>
+
+        <!-- <route id="simple-route">
             <from id="route-timer" uri="timer://foo?period=20000"/>
-            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version 1.0.4</simple></setBody>
+            <setBody id="route-setBody"><simple>Hello World from camel-context.xml version - 1.0.0</simple></setBody>
             <log id="route-log" message=">>> ${body}"/>
-        </route>
-
+        </route> -->
     </camelContext>
 </beans>
