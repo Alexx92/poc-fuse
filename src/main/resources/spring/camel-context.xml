@@ -49,7 +49,7 @@
             <unmarshal id="_jsonObject" ref="jsonToObjectInput"/>            
             <to id="_beanValidator" uri="bean-validator://requestInput"/>
             <!-- <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/> -->
-            <log message="RESPONSE SP => \n${body}"/>
+            <!-- <log message="RESPONSE SP => \n${body}"/> -->
             <!-- <setBody id="_setBody51">
                 <simple>${body[#result-set-1][0]}</simple>
             </setBody> -->
@@ -64,9 +64,11 @@
             <!-- <setBody>
                 <simple>{"Resultado": "${exchangeProperty[RESPONSE]}" }</simple>
             </setBody> -->
+            <log message="Los datos fueron validados correctamente"/>
             <setBody>
-                <simple>{"Resultado": "Datos Validados Correctamente" }</simple>
+                <simple>{"RESULT": "SUCCESS" }</simple>
             </setBody>
+
             <setHeader headerName="Content-Type">
                 <constant>application/json; charset:utf-8</constant>
             </setHeader>
