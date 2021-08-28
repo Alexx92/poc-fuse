@@ -7,14 +7,14 @@
        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
     
    <!--     Conexion Database -->
-    <bean
+  <!-- <bean
         class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
         <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
         <property name="url" value="jdbc:sqlserver://10.10.251.19;databaseName=SCA"/>
         <property name="username" value="testsiga"/>
         <property name="password" value="Amsa.2020#"/>
     </bean>
-    
+    -->
     <bean class="cl.amsa.contrato.obj.Input" id="requestInput"/>
     
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
@@ -47,8 +47,8 @@
             <from id="_fromIR1" uri="direct:routeBussines"/>
             <log message="DATA IN => \n${body}"/>
             <unmarshal id="_jsonObject" ref="jsonToObjectInput"/>            
-            <to id="_beanValidator" uri="bean-validator://requestInput"/>
-            <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/>
+            <!-- <to id="_beanValidator" uri="bean-validator://requestInput"/> -->
+            <!-- <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/> -->
             <log message="RESPONSE SP => \n${body}"/>
             <setBody id="_setBody51">
                 <simple>${body[#result-set-1][0]}</simple>
