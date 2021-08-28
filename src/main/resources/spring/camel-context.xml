@@ -47,22 +47,25 @@
             <from id="_fromIR1" uri="direct:routeBussines"/>
             <log message="DATA IN => \n${body}"/>
             <unmarshal id="_jsonObject" ref="jsonToObjectInput"/>            
-            <!-- <to id="_beanValidator" uri="bean-validator://requestInput"/> -->
+            <to id="_beanValidator" uri="bean-validator://requestInput"/>
             <!-- <to id="_sqlSP" uri="sql-stored:dbo.sca_ins_contratorequisito_examen_medico(VARCHAR(10) ${body.rut_trabajador}, DATE ${body.fecha_inicio}, DATE ${body.fecha_termino}, INTEGER ${body.codigo_certificado})?dataSource=#dataSource"/> -->
             <log message="RESPONSE SP => \n${body}"/>
-            <setBody id="_setBody51">
+            <!-- <setBody id="_setBody51">
                 <simple>${body[#result-set-1][0]}</simple>
-            </setBody>
-            <setProperty propertyName="RESPONSE">
+            </setBody> -->
+            <!-- <setProperty propertyName="RESPONSE">
                 <simple>${body[Resultado]}</simple>
-            </setProperty>
+            </setProperty> -->
             <to uri="direct:generateResponse"/>
         </route>
 
         <route>
             <from uri="direct:generateResponse"/>
-            <setBody>
+            <!-- <setBody>
                 <simple>{"Resultado": "${exchangeProperty[RESPONSE]}" }</simple>
+            </setBody> -->
+            <setBody>
+                <simple>{"Resultado": "Datos Validados Correctamente" }</simple>
             </setBody>
             <setHeader headerName="Content-Type">
                 <constant>application/json; charset:utf-8</constant>
@@ -70,7 +73,7 @@
         </route>
 
         <route id="simple-route">
-            <from id="route-timer" uri="timer://foo?period=20000"/>
+            <from id="route-timer" uri="timer://foo?period=60000"/>
             <setBody id="route-setBody"><simple>Hello World from camel-context.xml version - 1.0.0</simple></setBody>
             <log id="route-log" message=">>> ${body}"/>
         </route>
