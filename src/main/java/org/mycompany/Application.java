@@ -35,9 +35,9 @@ public class Application {
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-        logger.info("*** CARGA = " + System.getenv().getOrDefault("camel-config", "Hi"));
-        logger.info("*** CARGA = " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
+        logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
+        logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("camel-config", "Hi"));
+        logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
         Properties p = new Properties(System.getProperties());
         logger.info("*** CARGA = " + p);
 
