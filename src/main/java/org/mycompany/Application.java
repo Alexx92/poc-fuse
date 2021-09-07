@@ -36,7 +36,6 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-        logger.info("*** CARGA' = " + password);
 
     }
     @Bean
