@@ -6,11 +6,16 @@ The quickstart uses Spring Boot to configure a little application that includes 
 
 ### Building
 
-The example can be built with
+To run this quickstart as a standalone project on your local machine:
 
-    mvn clean install
 
-### Running the example in OpenShift
+    mvn clean package
+
+    ----
+
+    mvn spring-boot:run
+
+### Running the example in OpenShift (test)
 
 It is assumed that:
 - OpenShift platform is already running.
@@ -30,3 +35,18 @@ Then find the name of the pod that runs this quickstart, and output the logs fro
 
     oc logs <name of pod>
 
+### Enviar codigo a repositorio Git
+
+Ir al directorio del proyecto y ejecutar:
+
+    git add *
+
+Esto añade codigo al contexto de git local
+
+Realizar gravado de instancia actual para versionar
+
+    git commit -m "Texto descriptivo sobre cambios realizados"
+
+Enviar codigo a rama principal o Master:
+
+    git push origin master

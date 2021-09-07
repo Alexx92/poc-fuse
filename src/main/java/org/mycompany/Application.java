@@ -21,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
+import org.apache.log4j.Logger;
 
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
@@ -28,10 +29,13 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @ImportResource({"classpath:spring/camel-context.xml"})
 public class Application {
+    private static final Logger logger = Logger.getLogger("");
 
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        logger.info("*** CARGA = " + System.getenv().getOrDefault("example_1", "Hi"));
+
     }
     @Bean
     ServletRegistrationBean servletRegistrationBean() {
