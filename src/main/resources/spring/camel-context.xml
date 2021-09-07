@@ -18,6 +18,8 @@
     <bean class="cl.amsa.contrato.obj.Input" id="requestInput"/>
     
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <propertyPlaceholder id="placeholder" location="classpath:application.properties"/>
+
         <dataFormats>
             <json id="jsonToObjectInput" library="Jackson"
                 prettyPrint="true" unmarshalTypeName="cl.amsa.contrato.obj.Input"/>
@@ -78,8 +80,9 @@
             <from id="route-timer" uri="timer://foo?period=60000"/>
             <setBody id="route-setBody"><simple>Hello World from camel-context.xml version - 1.0.0</simple></setBody>
 
-            <log id="route-log" message="BODY >>> ${body}"/>
-            <log id="route-log" message="HEADERS >>> ${headers}"/>
+            <log message="BODY >>> ${body}"/>
+            <log message="HEADERS >>> ${headers}"/>
+            <log message="PROPERTIE >>> {{greeter.prefix}}"/>
         </route>
     </camelContext>
 </beans>
