@@ -38,6 +38,8 @@ public class Application {
         logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
         logger.info("*** CARGA = " + System.getenv().getOrDefault("camel-config", "Hi"));
         logger.info("*** CARGA = " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
+        Properties p = new Properties(System.getProperties());
+        logger.info("*** CARGA = " + p);
 
     }
     @Bean
