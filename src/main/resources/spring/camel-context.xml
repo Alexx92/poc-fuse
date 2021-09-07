@@ -77,7 +77,9 @@
         <route id="simple-route">
             <from id="route-timer" uri="timer://foo?period=60000"/>
             <setBody id="route-setBody"><simple>Hello World from camel-context.xml version - 1.0.0</simple></setBody>
-            <log id="route-log" message=">>> ${body}"/>
+
+            <log id="route-log" message="BODY >>> ${body}"/>
+            <log id="route-log" message="HEADERS >>> ${headers}"/>
         </route>
     </camelContext>
 </beans>
