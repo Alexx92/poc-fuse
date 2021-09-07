@@ -36,13 +36,17 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
+        logger.info("*** CARGA = " + System.getenv().getOrDefault("camel-config", "Hi"));
+        logger.info("*** CARGA 2= " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
+
     }
     @Bean
     ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/rest/*");
             logger.info("*** CARGA 2= " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-
+            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("camel-config", "Hi"));
+            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
         servlet.setName("CamelServlet");
         return servlet;
     }
