@@ -22,6 +22,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
@@ -30,11 +31,14 @@ import org.apache.log4j.Logger;
 @ImportResource({"classpath:spring/camel-context.xml"})
 public class Application {
     private static final Logger logger = Logger.getLogger("");
-
+	
+    @Value("${spring.data.mongodb.password}")
+    private String password;
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info("*** CARGA = " + System.getenv().getOrDefault("example_1", "Hi"));
+        logger.info("*** CARGA' = " + password);
 
     }
     @Bean
@@ -42,6 +46,7 @@ public class Application {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/rest/*");
             logger.info("*** CARGA 2= " + System.getenv().getOrDefault("example_1", "Hi"));
+            logger.info("*** CARGA 2' = " + password);
 
         servlet.setName("CamelServlet");
         return servlet;
