@@ -35,14 +35,13 @@ public class Application {
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-
+        // logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
     }
     @Bean
     ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/rest/*");
-            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
+            // logger.info("*** CARGA 2= " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
 
         servlet.setName("CamelServlet");
         return servlet;
