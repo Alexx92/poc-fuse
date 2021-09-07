@@ -37,7 +37,7 @@ public class Application {
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        logger.info("*** CARGA = " + System.getenv().getOrDefault("example_1", "Hi"));
+        logger.info("*** CARGA = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
         logger.info("*** CARGA' = " + password);
 
     }
