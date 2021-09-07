@@ -2,19 +2,20 @@ spec:
   template:
     spec:
       containers:
-        - 
-          resources:
-            requests:
-              cpu: "0.2"
-              memory: 256Mi
-            limits:
-              cpu: "2.0"
-              memory: 256Mi
-          env:
-          - name: SPRING_APPLICATION_JSON
-            value: '{"server":{"undertow":{"io-threads":1, "worker-threads":2 }}}'
+        - env:
           - name: GREETING_PREFIX
             valueFrom:
-              configMapKeyRef:
-                  name: spring-boot-configmaps-demo
-                  key: greeter.prefix
+             configMapKeyRef:
+                name: spring-boot-configmaps-demo
+                key: greeter.prefix
+          volumeMounts:
+          - name: application-config 
+            mountPath: "/deployments/config" 
+            readOnly: true
+      volumes:
+      - name: application-config
+        configMap:
+          name: spring-app-config 
+          items:
+          - key: application.properties 
+            path: application.properties 
