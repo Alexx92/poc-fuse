@@ -1,6 +1,12 @@
 spec:
   template:
     spec:
+      serviceAccountName: "poc-fuse" 
+      volumes: 
+        - name: "camel-config"
+          secret:
+            # The secret must be created before deploying this application
+            secretName: "camel-config"
       containers:
         -
           volumeMounts: 
@@ -18,4 +24,4 @@ spec:
 #              memory: 256Mi
              env:
               - name: SPRING_APPLICATION_JSON
-               value: '{"server":{"undertow":{"io-threads":1, "worker-threads":2 }}}'  
+               value: '{"server":{"undertow":{"io-threads":1, "worker-threads":2 }}}'
