@@ -41,6 +41,8 @@ public class Application {
     ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/rest/*");
+            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("example_1", "Hi"));
+
         servlet.setName("CamelServlet");
         return servlet;
     }
