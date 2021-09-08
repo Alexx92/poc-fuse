@@ -35,16 +35,16 @@ public class Application {
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-        logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("VALUE2", "Hi"));
+        logger.info("*** Valor de CM fijo = " + System.getenv().getOrDefault("GREETING_PREFIX", "No value Fijo"));
+        logger.info("*** Valor de CM MAP = " + System.getenv().getOrDefault("VALUE2", "NO vlaue MAP"));
 
     }
     @Bean
     ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/rest/*");
-            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
+            logger.info("*** Valor de CM fijo = " + System.getenv().getOrDefault("GREETING_PREFIX", "No value Fijo"));
+            logger.info("*** Valor de CM MAP = " + System.getenv().getOrDefault("VALUE2", "NO vlaue MAP"));
         servlet.setName("CamelServlet");
         return servlet;
     }
