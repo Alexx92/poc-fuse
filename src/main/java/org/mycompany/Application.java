@@ -22,7 +22,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.apache.log4j.Logger;
-
+import java.util.Properties;
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
  */
@@ -36,7 +36,6 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-        logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("camel-config", "Hi"));
         logger.info("*** CARGA 1 = " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
 
 
@@ -46,7 +45,6 @@ public class Application {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/rest/*");
             logger.info("*** CARGA 2= " + System.getenv().getOrDefault("GREETING_PREFIX", "Hi"));
-            logger.info("*** CARGA 2= " + System.getenv().getOrDefault("camel-config", "Hi"));
             logger.info("*** CARGA 2= " + System.getenv().getOrDefault("greeter.prefix", "Hi"));
         servlet.setName("CamelServlet");
         return servlet;

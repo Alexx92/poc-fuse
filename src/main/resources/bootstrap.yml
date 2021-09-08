@@ -1,7 +1,8 @@
 # Startup configuration of Spring-cloud-kubernetes
 spring:
   application:
-    name: camel-config
+    name: spring-app-config
+    # name: camel-config
   cloud:
     kubernetes:
       reload:
