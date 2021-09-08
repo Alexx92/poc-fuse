@@ -38,6 +38,8 @@ public class Application {
         logger.info("*** Valor ID-EMISOR = " + System.getenv().getOrDefault("COD-SERVICIO", "No existe en property"));
         logger.info("*** Valor COD-SERVICIO = " + System.getenv().getOrDefault("ID-EMISOR", "No existe en property"));
 
+        logger.info("*** Valor COD-SERVICIO = " + System.getenv().getOrDefault("USER-CALL-SOAP", "No existe en property"));
+
     }
     @Bean
     ServletRegistrationBean servletRegistrationBean() {
